@@ -31,9 +31,12 @@
   .nav .nav-cta:hover { background: #b08c1c; }
 
   @media (max-width: 700px) {
-    .nav { width: 44px; padding: .8rem 0; }
-    .nav a { width: 34px; height: 34px; font-size: .65rem; }
-    .nav .nav-cta { width: 32px; height: 32px; font-size: .62rem; }
+    .nav { position: sticky; top: 0; width: 100%; height: auto; flex-direction: row;
+           justify-content: center; padding: .5rem .8rem; gap: .6rem; z-index: 100; }
+    .nav a { width: auto; height: auto; min-height: auto; writing-mode: horizontal-tb;
+             font-size: .7rem; padding: .3rem .5rem; border-radius: 5px; }
+    .nav .nav-cta { width: auto; height: auto; font-size: .7rem; padding: .3rem .7rem; margin-top: 0; }
+    main { padding-left: 1.25rem; }
   }
 
   /* ---- HERO ---- */
