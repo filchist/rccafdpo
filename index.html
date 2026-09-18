@@ -18,24 +18,44 @@
   /* ---- NAV ---- */
   .nav { position: fixed; top: 0; left: 0; z-index: 100; background: var(--brand);
          width: 56px; height: 100vh; display: flex; flex-direction: column;
-         align-items: center; padding: 1.2rem 0; gap: 2.4rem; }
+         align-items: center; padding: 1.2rem 0; }
+  .nav .nav-links { display: flex; flex-direction: column; align-items: center;
+                    gap: 2.4rem; margin-top: 2.5rem; flex: 1; }
   .nav a { display: flex; align-items: center; justify-content: center;
-           width: 42px; height: auto; min-height: 42px; border-radius: 8px; color: rgba(255,255,255,.65);
+           width: 42px; min-height: 42px; border-radius: 8px; color: rgba(255,255,255,.65);
            text-decoration: none; font-size: .7rem; font-weight: 600; line-height: 1;
            writing-mode: vertical-rl; text-orientation: mixed;
            transition: color .15s, background .15s; }
   .nav a:hover { color: #fff; background: rgba(255,255,255,.08); }
   .nav .nav-cta { background: var(--gold); color: #fff; margin-top: auto;
                   writing-mode: horizontal-tb; font-size: .68rem;
-                  width: 38px; height: 38px; }
+                  width: 42px; height: 42px; }
   .nav .nav-cta:hover { background: #b08c1c; }
+  .nav-toggle, .nav-burger { display: none; }
 
-  @media (max-width: 700px) {
+  @media (max-width: 900px) {
     .nav { position: sticky; top: 0; width: 100%; height: auto; flex-direction: row;
-           justify-content: center; padding: .5rem .8rem; gap: .6rem; z-index: 100; }
-    .nav a { width: auto; height: auto; min-height: auto; writing-mode: horizontal-tb;
-             font-size: .7rem; padding: .3rem .5rem; border-radius: 5px; }
-    .nav .nav-cta { width: auto; height: auto; font-size: .7rem; padding: .3rem .7rem; margin-top: 0; }
+           align-items: center; justify-content: space-between;
+           padding: 0 .9rem; gap: 0; }
+    .nav .nav-burger { display: flex; flex-direction: column; justify-content: center;
+                       gap: 5px; width: 42px; height: 46px; cursor: pointer; }
+    .nav .nav-burger span { display: block; height: 3px; width: 26px; background: #fff;
+                            border-radius: 2px; transition: .25s; }
+    .nav .nav-toggle:checked ~ .nav-burger span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+    .nav .nav-toggle:checked ~ .nav-burger span:nth-child(2) { opacity: 0; }
+    .nav .nav-toggle:checked ~ .nav-burger span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+    .nav .nav-links { display: none; position: absolute; top: 100%; left: 0; right: 0;
+                      flex-direction: column; align-items: stretch; gap: 0;
+                      margin-top: 0; background: var(--brand);
+                      box-shadow: 0 12px 24px rgba(0,0,0,.25); }
+    .nav .nav-toggle:checked ~ .nav-links { display: flex; }
+    .nav .nav-links a { writing-mode: horizontal-tb; width: 100%; min-height: 52px;
+                        justify-content: flex-start; padding: 0 1.2rem;
+                        font-size: .95rem; border-bottom: 1px solid rgba(255,255,255,.08); }
+    .nav .nav-links a:hover { background: rgba(255,255,255,.1); }
+    .nav .nav-cta { margin: .8rem 1.2rem; width: auto; height: auto;
+                    writing-mode: horizontal-tb; font-size: .9rem; padding: .7rem 1.2rem;
+                    text-align: center; align-self: center; }
     main { padding-left: 1.25rem; }
   }
 
@@ -133,7 +153,17 @@
     .hero { padding: 2rem 1rem 1.5rem; }
     .cta-block { padding: 1.5rem 1rem; }
     .checklist-grid { grid-template-columns: 1fr !important; }
-    .checklist-grid svg { width: 50px; height: auto; transform: rotate(90deg); }
+    main { padding-left: 1rem; padding-right: 1rem; }
+    section { margin: 2.5rem 0; }
+    h2 { font-size: 1.3rem; }
+    .hero { padding-top: 1.6rem; }
+    body { font-size: 15px; }
+  }
+  @media (max-width: 720px) {
+    .price-table { font-size: .82rem; }
+    .price-table th, .price-table td { padding: .5rem .5rem; }
+    .dpo-grid, .report-flex { grid-template-columns: 1fr !important; flex-direction: column !important; }
+    .products, .adv-list { gap: .9rem; }
   }
   @media print {
     main { max-width: none; }
@@ -146,13 +176,17 @@
 
 <!-- ===== NAV ===== -->
 <nav class="nav">
-  <a href="#products">Продукты</a>
-  <a href="#checklist">Самопроверка</a>
-  <a href="#how">Методология</a>
-  <a href="#reports">Отчёты</a>
-  <a href="#pricing">Цены</a>
-  <a href="#contacts">Контакты</a>
-  <a href="#cta" class="nav-cta">▶</a>
+  <input type="checkbox" id="nav-toggle" class="nav-toggle" aria-label="Открыть меню">
+  <label for="nav-toggle" class="nav-burger" aria-hidden="true"><span></span><span></span><span></span></label>
+  <div class="nav-links">
+    <a href="#products">Продукты</a>
+    <a href="#checklist">Самопроверка</a>
+    <a href="#how">Методология</a>
+    <a href="#reports">Отчёты</a>
+    <a href="#pricing">Цены</a>
+    <a href="#contacts">Контакты</a>
+    <a href="#cta" class="nav-cta">Получить консультацию</a>
+  </div>
 </nav>
 
 <!-- ===== HERO ===== -->
@@ -278,7 +312,7 @@
   <p class="sec-lead">
     Пройдите самодиагностику и за 16 простых пунктов увидите дефициты в работе с командой и возможности её развития. Заполните форму и скачайте PDF бесплатно.
   </p>
-  <div class="checklist-grid" style="display:grid;grid-template-columns:1fr auto 1fr;gap:1.25rem;align-items:stretch;">
+  <div class="checklist-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:1.25rem;align-items:stretch;">
     <div style="padding:1.4rem;border:1px solid var(--line);border-radius:12px;background:var(--gold-soft);display:flex;flex-direction:column;">
       <h4 style="color:var(--brand);font-size:.95rem;margin-bottom:.5rem;">Что внутри чек-листа</h4>
       <ul style="font-size:.85rem;color:var(--ink);padding-left:1.1rem;line-height:1.7;">
@@ -287,17 +321,6 @@
         <li>Интерпретация результата и план действий</li>
       </ul>
     </div>
-    <svg viewBox="0 0 120 240" role="img" aria-label="Чек-лист" style="width:70px;height:100%;align-self:center;">
-      <rect x="20" y="15" width="80" height="210" rx="10" fill="#fff" stroke="#c4a028" stroke-width="2"/>
-      <rect x="20" y="15" width="80" height="34" rx="10" fill="#c4a028"/>
-      <path d="M38 32 l10 10 l20 -22" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
-      <line x1="38" y1="75" x2="82" y2="75" stroke="#18315b" stroke-width="4" stroke-linecap="round"/>
-      <line x1="38" y1="100" x2="82" y2="100" stroke="#c9d3df" stroke-width="4" stroke-linecap="round"/>
-      <line x1="38" y1="125" x2="82" y2="125" stroke="#18315b" stroke-width="4" stroke-linecap="round"/>
-      <line x1="38" y1="150" x2="82" y2="150" stroke="#c9d3df" stroke-width="4" stroke-linecap="round"/>
-      <line x1="38" y1="175" x2="82" y2="175" stroke="#18315b" stroke-width="4" stroke-linecap="round"/>
-      <line x1="38" y1="200" x2="82" y2="200" stroke="#c9d3df" stroke-width="4" stroke-linecap="round"/>
-    </svg>
     <div style="padding:1.4rem;border:1px solid var(--line);border-radius:12px;display:flex;flex-direction:column;justify-content:center;">
       <form id="leadForm" style="display:flex;flex-direction:column;gap:.7rem;">
         <input type="text" id="leadName" placeholder="ФИО" required style="padding:.65rem .8rem;border:1px solid var(--line);border-radius:6px;font-size:.9rem;font-family:inherit;">
@@ -521,7 +544,7 @@
   <p class="sec-lead">
     Загрузите отчёт участника или заказчика — мы проанализируем профиль компетенций, сопоставим его со списком программ факультета и подготовим персональное предложение по обучению.
   </p>
-  <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.25rem;">
+  <div class="dpo-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:1.25rem;">
     <div style="padding:1.5rem;border:1px solid var(--line);border-radius:12px;background:var(--brand-pale);display:flex;flex-direction:column;">
       <h4 style="color:var(--brand);font-size:.95rem;margin-bottom:.5rem;">Как это работает</h4>
       <ul style="font-size:.85rem;color:var(--ink);padding-left:1.1rem;line-height:1.7;flex:1;">
